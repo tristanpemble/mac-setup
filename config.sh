@@ -108,6 +108,17 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
+# Configure the dock
+dockutil --remove all
+dockutil --add /Applications/Google\ Chrome.app
+dockutil --add /Applications/Mail.app
+dockutil --add /Applications/Fantastical\ 2.app
+dockutil --add /Applications/Slack.app
+dockutil --add /Applications/PhpStorm.app
+dockutil --add /Applications/iTerm.app
+dockutil --add /Applications/Tower.app
+dockutil --add ~/Downloads --view fan --display stack
+
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
