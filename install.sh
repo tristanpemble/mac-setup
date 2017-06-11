@@ -70,12 +70,13 @@ fi
 
 banner "Installing applications and packages"
 
+brew update
 if which xcodebuild
 then
   sudo xcodebuild -license accept
-  brew bundle
+  brew update && brew bundle
 else
-  brew bundle
+  brew update && brew bundle
   sudo xcodebuild -license accept
 fi
 
