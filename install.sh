@@ -22,6 +22,8 @@ banner ()
   echo "$RESET"
 }
 
+sudo -v -p "SUDO Password: "
+
 banner "Installing XCode command line tools"
 
 if xcode-select -p > /dev/null 2>&1
@@ -65,6 +67,6 @@ ansible-galaxy install -r requirements.yml
 
 banner "Configuring the machine with Ansible"
 ansible-galaxy install -r requirements.yml
-ansible-playbook -K -i inventory ./playbook.yml
+ansible-playbook -i inventory ./playbook.yml
 
 banner "All done!"
