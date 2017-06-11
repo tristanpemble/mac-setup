@@ -22,7 +22,11 @@ banner ()
   echo "$RESET"
 }
 
+# Ask for the administrator password upfront
 sudo -v -p "SUDO Password: "
+
+# Keep-alive: update existing `sudo` time stamp until the script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 banner "Installing XCode command line tools"
 
@@ -48,32 +52,43 @@ else
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
 fi
 
-banner "Installing Ansible"
-
-if which ansible-playbook > /dev/null 2>&1 \
-   && which ansible-galaxy > /dev/null 2>&1
-then
-  echo "Already installed."
-else
-  brew install ansible
-fi
-
 banner "Cloning (or updating) the repository"
 
-if [ -d ~/.mac-setup ]
+if ! grep tristanpemble/mac-setup .git/config > /dev/null 2>&1
 then
-  cd ~/.mac-setup
-  git pull
+  if [ -d ~/.mac-setup ]
+  then
+    cd ~/.mac-setup
+    git pull
+  else
+    git clone https://github.com/tristanpemble/mac-setup ~/.mac-setup
+    cd ~/.mac-setup
+  fi
 else
-  git clone https://github.com/tristanpemble/mac-setup ~/.mac-setup
-  cd ~/.mac-setup
+  echo "Already in repository root."
 fi
 
-banner "Installing playbook dependencies"
-ansible-galaxy install -r requirements.yml
+banner "Install applications and packages"
+brew bundle
 
-banner "Configuring the machine"
-ansible-galaxy install -r requirements.yml
-ansible-playbook -i inventory ./playbook.yml
+banner "Install Node.JS utilities"
+yarn global add \
+  bower \
+  create-react-app \
+  ember-cli \
+  grunt-cli \
+  gulp-cli
+
+banner "Configure the system"
+bash ./config.sh
 
 banner "All done!"
+
+echo "Rebooting the system in.. (ctrl+c to exit)"
+for i in {5..1}
+do
+  echo $if
+  sleep 1
+done
+
+sudo shutdown -r now
