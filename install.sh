@@ -34,7 +34,7 @@ else
     head -n 1 | awk -F"*" '{print $2}' |
     sed -e 's/^ *//' |
     tr -d '\n')
-  softwareupdate -i "$PROD" -v;
+  softwareupdate -i "$PROD";
 fi
 
 banner "Installing Homebrew"
@@ -43,7 +43,7 @@ if which brew > /dev/null 2>&1
 then
   echo "Already installed."
 else
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
 fi
 
 banner "Installing Ansible"
