@@ -68,10 +68,10 @@ else
   echo "Already in repository root."
 fi
 
-banner "Install applications and packages"
+banner "Installing applications and packages"
 brew bundle
 
-banner "Install Node.JS utilities"
+banner "Installing Node.JS utilities"
 yarn global add \
   bower \
   create-react-app \
@@ -79,7 +79,7 @@ yarn global add \
   grunt-cli \
   gulp-cli
 
-banner "Configure the system"
+banner "Configuring the system"
 bash ./config.sh
 
 banner "All done!"
