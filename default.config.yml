@@ -27,10 +27,10 @@ homebrew_packages:
   - mysql
   - node
   - openshift-cli
-  - php-code-sniffer
-  - php-cs-fixer
   - php71
   - phploc
+  - php-code-sniffer
+  - php-cs-fixer
   - postgresql
   - pre-commit
   - protobuf
