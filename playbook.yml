@@ -1,0 +1,158 @@
+---
+- hosts: all
+  connection: local
+  vars_files:
+    - default.config.yml
+  roles:
+    - role: geerlingguy.homebrew
+    - role: geerlingguy.mas
+
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Add Homebrew taps
+      homebrew_tap:
+        tap: "{{item}}"
+        state: present
+      with_items:
+        - caskroom/cask
+        - caskroom/versions
+        - homebrew/php
+
+    - name: Install Java
+      homebrew_cask:
+        name: java
+        state: present
+
+    - name: Install Homebrew applications
+      homebrew:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - ansible
+        - ansible-lint
+        - awscli
+        - composer
+        - dockutil
+        - entr
+        - fish
+        - git
+        - go
+        - graphviz
+        - httpie
+        - hub
+        - keybase
+        - kubernetes-cli
+        - kubernetes-helm
+        - mackup
+        - mas
+        - mkdocs
+        - mycli
+        - mysql
+        - node
+        - openshift-cli
+        - php-code-sniffer
+        - php-cs-fixer
+        - php71
+        - phploc
+        - postgresql
+        - pre-commit
+        - protobuf
+        - rbenv
+        - ruby
+        - ruby-build
+        - rust
+        - ssh-copy-id
+        - stern
+        - terraform
+        - tmux
+        - tree
+        - watchman
+
+    - name: Install Caskroom applications
+      homebrew_cask:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - 1password
+        - ableton-live-suite
+        - adobe-photoshop-cc
+        - alfred
+        - angry-ip-scanner
+        - appcode
+        - atom
+        - battle-net
+        - cargo
+        - cycling74-max
+        - daisydisk
+        - dash
+        - discord
+        - docker
+        - dropbox
+        - fantastical
+        - filebot
+        - firefox
+        - flash
+        - flux
+        - google-chrome
+        - google-chrome-canary
+        - handbrake
+        - intellij-idea
+        - iterm2
+        - karabiner
+        - keepingyouawake
+        - little-snitch
+        - launchrocket
+        - livereload
+        - micro-snitch
+        - microsoft-office
+        - minikube
+        - minishift
+        - moom
+        - mou
+        - nylas-n1
+        - nzbvortex
+        - obs
+        - openemu
+        - origin
+        - phpstorm
+        - postman
+        - renamer
+        - sequel-pro
+        - skype
+        - slack
+        - spotify
+        - steam
+        - the-unarchiver
+        - tower
+        - transmission
+        - transmit
+        - unity
+        - vagrant
+        - virtualbox
+        - visual-studio-code
+        - vlc
+        - vmware-fusion
+        - webstorm
+
+    - name: Install Node.JS utilities
+      npm:
+        name: "{{item}}"
+        state: present
+        global: yes
+      with_items:
+        - grunt-cli
+        - gulp-cli
+        - ember-cli
+        - bower
+
+    - name: Configure the Dock
+      shell: "{{item}}"
+      with_items:
+        - dockutil --remove all
+        - dockutil --add /Applications/Google\ Chrome.app
+        - dockutil --add /Applications/Mail.app
+        - dockutil --add /Applications/Slack.app
+        - dockutil --add /Applications/PhpStorm.app
+        - dockutil --add /Applications/iTerm.app
+        - dockutil --add ~/Downloads --view fan --display stack
