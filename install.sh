@@ -51,7 +51,7 @@ brew install ansible
 
 banner "Cloning the repository"
 
-if [ -d "~/.mac-setup" ]
+if [ -d ~/.mac-setup ]
 then
   cd ~/.mac-setup
   git pull
