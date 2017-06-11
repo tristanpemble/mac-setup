@@ -69,7 +69,15 @@ else
 fi
 
 banner "Installing applications and packages"
-brew bundle
+
+if which xcodebuild
+then
+  sudo xcodebuild -license accept
+  brew bundle
+else
+  brew bundle
+  sudo xcodebuild -license accept
+fi
 
 banner "Installing Node.JS utilities"
 yarn global add \
