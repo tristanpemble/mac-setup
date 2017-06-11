@@ -49,9 +49,16 @@ else
 fi
 
 banner "Installing Ansible"
-brew install ansible
 
-banner "Cloning the repository"
+if which ansible-playbook > /dev/null 2>&1 \
+   && which ansible-galaxy > /dev/null 2>&1
+then
+  echo "Already installed."
+else
+  brew install ansible
+fi
+
+banner "Cloning (or updating) the repository"
 
 if [ -d ~/.mac-setup ]
 then
@@ -65,7 +72,7 @@ fi
 banner "Installing playbook dependencies"
 ansible-galaxy install -r requirements.yml
 
-banner "Configuring the machine with Ansible"
+banner "Configuring the machine"
 ansible-galaxy install -r requirements.yml
 ansible-playbook -i inventory ./playbook.yml
 
