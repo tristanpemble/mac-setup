@@ -87,7 +87,7 @@ banner "All done!"
 echo "Rebooting the system in.. (ctrl+c to exit)"
 for i in {5..1}
 do
-  echo $if
+  echo "${i}.."
   sleep 1
 done
 
