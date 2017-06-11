@@ -81,7 +81,7 @@ else
 fi
 
 banner "Installing Node.JS utilities"
-yarn global add \
+yarn global add --ignore-engines \
   bower \
   create-react-app \
   ember-cli \
